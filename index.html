@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>HOW FAST CAN U CLICK!!!</title>
+    <style>
+
+      :root{
+        --bound: 100px;
+      }
+
+      body{
+        background-color: rgba(255, 94, 100, 0.5);
+        text-align: center;
+        color: #ff3864;
+        opacity: 0.7;
+        font-family: sans-serif;
+      }
+      .p{
+        text-align: center;
+        color: #ff3864;
+        opacity: 0.7;
+        font-family: sans-serif;
+        font-weight: bold;
+      }
+      #box{
+        width: var(--bound);
+        height: var(--bound);
+        background-color: red;
+        opacity: 0.5;
+        display: none;
+        position: relative;
+      }
+    </style>
+
+  </head>
+  <body>
+    <h1>HOW FAST CAN U CLICK!!!</h1>
+    <p class="p">react time: <span id="time">0</span>s</p>
+    <div id="box"></div>
+    <script type="text/javascript">
+      var createdTime;
+      var clickedTime;
+      var reactionTime;
+
+      function randomcolor(){
+          var max = 200;
+          var min = 50;
+          var green = Math.floor(Math.random() * (max-min+1)) + min;
+          var color = "rgba(255," + green + ",100,1.0)";
+          return color;
+      }
+
+      function makebox(){
+
+        var time = Math.random();
+        time = time * 3000;
+
+        setTimeout(function(){
+        if(Math.random()>=0.5){
+            document.getElementById('box').style.borderRadius = "75px";
+            document.getElementById('box').style.border="5px dotted darkred";
+          }else {
+            document.getElementById('box').style.borderRadius = "0px";
+            document.getElementById('box').style.border="5px solid black";
+          }
+
+        var min = 0;
+        var max = document.documentElement.clientHeight - 280;
+        var top = Math.floor(Math.random() * (max-min+1)) + min;
+
+        min = 0;
+        max = document.documentElement.clientWidth - 140;
+
+        if(document.documentElement.clientWidth > document.documentElement.clientHeight){
+          var dynamicBound = document.documentElement.clientWidth/8;
+          //console.log("width:"+  dynamicBound);
+        }else {
+          var dynamicBound = document.documentElement.clientHeight/8;
+          //console.log("height:"+  dynamicBound);
+        }
+
+        dynamicBound = dynamicBound + "px" ;
+        document.documentElement.style.setProperty("--bound",dynamicBound);
+
+        var left = Math.floor(Math.random() * (max-min+1)) + min;
+
+
+        document.getElementById('box').style.top = top +"px";
+        document.getElementById('box').style.left = left +"px";
+
+        document.getElementById('box').style.backgroundColor = randomcolor() ;
+        document.getElementById('box').style.display = "block";
+        createdTime = Date.now();
+        },  time);
+
+
+      }
+
+      document.getElementById('box').onclick = function(){
+        this.style.display="none";
+        clickedTime = Date.now();
+        reactionTime= (clickedTime-createdTime)/1000 ;
+        document.getElementById('time').innerHTML = reactionTime;
+        makebox();
+      }
+
+      makebox();
+
+
+
+
+    </script>
+  </body>
+</html>
